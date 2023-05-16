@@ -1,0 +1,120 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\bk489> docker run --name=mysql01 -d mysql/mysql-server:latest
+e33c2d1be2be6bb7a340cf416e55914deb352235124263494437aa3ee17a932e
+PS C:\Users\bk489> docker exec -it mysql01 mysql -uroot -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.32
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> UPDATE mysql.user set host="%" WHERE user="root";
+ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.
+mysql> ALTER USER root@localhost IDENTIFIED BY 123456;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '123456' at line 1
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'newpassword';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> UPDATE mysql.user set host="%" WHERE user="root";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> flush privileges;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT user, host FROM mysql.user;
++------------------+-----------+
+| user             | host      |
++------------------+-----------+
+| root             | %         |
+| healthchecker    | localhost |
+| mysql.infoschema | localhost |
+| mysql.session    | localhost |
+| mysql.sys        | localhost |
++------------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql>
+PS C:\Users\bk489> docker run -d -p 3306:3306 --name=mysql -v D:/Doker_lab_Dmytro/Lab_03/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=test_db mysql/mysql-server:latest
+231fc7babbb73f413c9029396ac117719cce8a13cf0ea2f4ce1619723d8276c5
+PS C:\Users\bk489> docker exec -it mysql mysql -uroot -p
+Enter password:
+ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)
+PS C:\Users\bk489> docker exec -it mysql mysql -uroot --password=123456
+mysql: [Warning] Using a password on the command line interface can be insecure.
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+PS C:\Users\bk489> docker exec -it mysql mysql
+ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)
+PS C:\Users\bk489> docker exec -it mysql mysql -uroot
+ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)
+PS C:\Users\bk489> docker exec -it mysql mysql -uroot -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.32 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> UPDATE mysql.user set host="%" WHERE user="root";
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> flush privileges;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> SELECT user, host FROM mysql.user;
++------------------+-----------+
+| user             | host      |
++------------------+-----------+
+| root             | %         |
+| healthchecker    | localhost |
+| mysql.infoschema | localhost |
+| mysql.session    | localhost |
+| mysql.sys        | localhost |
++------------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> quit
+Bye
+PS C:\Users\bk489> docker run -d --name myadmin --link mysql:db -e PMA_HOST=mysql -e PMA_USER=root -e PMA_PASSWORD=123456 -p 8080:80 phpmyadmin/phpmyadmin:latest
+Unable to find image 'phpmyadmin/phpmyadmin:latest' locally
+latest: Pulling from phpmyadmin/phpmyadmin
+f1f26f570256: Pull complete
+ee0a4e40ccac: Pull complete
+5ca9fb408faa: Pull complete
+5baa808a48ff: Pull complete
+6e8d74e4d8ee: Pull complete
+fac8e70fcf67: Pull complete
+b3b7906fb177: Pull complete
+cb4935bbeb83: Pull complete
+c9e00ef337e3: Pull complete
+cfe495c8d695: Pull complete
+dcc3fd107f0c: Pull complete
+fe3c587d1f07: Pull complete
+677f27d94442: Pull complete
+4d778a8cb653: Pull complete
+5f0f7b557ecd: Pull complete
+6ad259d60f7c: Pull complete
+41acd705cbc4: Pull complete
+912204d5a7e6: Pull complete
+Digest: sha256:ed87921184b59f7d8fc85c6a5f041c22758a4d4419c0ee3bac38eb7e133eaed3
+Status: Downloaded newer image for phpmyadmin/phpmyadmin:latest
+d6ad88d665f2096eae731774f9eafe190f502cf6b7302542c6b84ce2bc25953d
+PS C:\Users\bk489>
