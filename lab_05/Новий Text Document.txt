@@ -1,0 +1,27 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\bk489> cd D:\Doker_lab_Dmytro\lam_05
+PS D:\Doker_lab_Dmytro\lam_05> docker-compose up -d
+[+] Running 17/17
+ - kafka Pulled                                                                                                   78.9s
+   - 42c077c10790 Pull complete                                                                                   16.2s
+   - 44b062e78fd7 Pull complete                                                                                   16.3s
+   - b3ba9647f279 Pull complete                                                                                   16.4s
+   - 10c9a58bd495 Pull complete                                                                                   28.6s
+   - ed9bd501c190 Pull complete                                                                                   28.7s
+   - 03346d650161 Pull complete                                                                                   76.1s
+   - 539ec416bc55 Pull complete                                                                                   76.1s
+ - zookeeper Pulled                                                                                               17.3s
+   - 1bc677758ad7 Pull complete                                                                                    8.9s
+   - 458b02b5411a Pull complete                                                                                    9.6s
+   - b04a165ead1d Pull complete                                                                                   13.5s
+   - 1187c73b1850 Pull complete                                                                                   13.6s
+   - 5930529b6097 Pull complete                                                                                   13.7s
+   - 8b11d2d1cbc9 Pull complete                                                                                   13.9s
+   - 5d3163cc8fed Pull complete                                                                                   14.5s
+   - 64efce64799b Pull complete                                                                                   14.6s
+network lab declared as external, but could not be found
+PS D:\Doker_lab_Dmytro\lam_05>

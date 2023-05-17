@@ -1,0 +1,14 @@
+version: '3'
+services:
+  service1:
+    build:
+      context: ./create_file_service
+      dockerfile: Dockerfile1
+    volumes:
+      - ./time_checker:/app
+  service2:
+    build:
+      context: ./check_directory_service
+      dockerfile: Dockerfile2
+    volumes:
+      - ./time_checker:/app

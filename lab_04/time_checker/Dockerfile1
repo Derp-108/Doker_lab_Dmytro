@@ -1,0 +1,4 @@
+FROM python:3.9
+WORKDIR /app
+COPY create_file_service.py .
+CMD ["python", "create_file_service.py"]
